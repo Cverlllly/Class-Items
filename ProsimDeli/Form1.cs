@@ -68,10 +68,18 @@ namespace ProsimDeli
         {
             try
             {
-                string a = textBox2.Text;
-                string b = textBox3.Text;;
-                ItemsDatabase itemdatabase = new ItemsDatabase();
-                itemdatabase.SaveItem(a, b);
+                if (!(textBox2.Text is "") && !(textBox2.Text is ""))
+                {
+                    string a = textBox2.Text;
+                    string b = textBox3.Text; ;
+                    ItemsDatabase itemdatabase = new ItemsDatabase();
+                    itemdatabase.SaveItem(a, b); 
+                }
+                else
+                {
+                    MessageBox.Show("You left an empty field", "Empty field",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);    
+                }
             }
             catch (Exception ex)
             {
@@ -112,11 +120,20 @@ namespace ProsimDeli
 
             try
             {
-                int ne = int.Parse(ja);
-                string neki = textBox2.Text;
-                string price = textBox3.Text;
-                ItemsDatabase itemdatabase = new ItemsDatabase();
-                itemdatabase.UpdateItem(ne, neki, price);
+                if (!(textBox2.Text is "") && !(textBox2.Text is ""))
+                {
+                    int ne = int.Parse(ja);
+                    string neki = textBox2.Text;
+                    string price = textBox3.Text;
+                    ItemsDatabase itemdatabase = new ItemsDatabase();
+                    itemdatabase.UpdateItem(ne, neki, price);
+                }
+                else
+                {
+                    MessageBox.Show("You left an empty field", "Empty field",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
             }
             catch (Exception ex)
             {
