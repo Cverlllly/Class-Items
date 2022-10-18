@@ -20,7 +20,7 @@ namespace ProsimDeli
         }
         public override string ToString()
         {
-            return ItemID.ToString()+"   " + ItemName.ToString()+"   " + Price.ToString();
+            return ItemID.ToString()+" " + ItemName.ToString()+" " + Price.ToString();
         }
     }
     public class SoftwareItem : Item

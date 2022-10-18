@@ -28,9 +28,10 @@ namespace ProsimDeli
             {
 
                 var neki = listBox1.Text.Split(' ');
+                Console.WriteLine(neki);
                 ja = neki[0];
-                ime = neki[3];
-                cena = neki[6];
+                ime = neki[1];
+                cena = neki[2];
 
                 textBox2.Text = ime;
                 textBox3.Text = cena;
