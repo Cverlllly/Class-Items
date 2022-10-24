@@ -11,7 +11,7 @@ namespace ProsimDeli
             InitializeComponent();
 
             ItemsDatabase itemsdatabase = new ItemsDatabase();
-            List<Item> a = itemsdatabase.ReadItems();
+            List<Computer> a = itemsdatabase.AllItems();
             foreach(var l in a)
             {
                 listBox1.Items.Add(l);
@@ -53,7 +53,7 @@ namespace ProsimDeli
                 ItemsDatabase itemdatabase = new ItemsDatabase();
                 itemdatabase.DeleteItem(ne);
                 listBox1.Items.Clear();
-                List<Item> a = itemdatabase.ReadItems();
+                List<HardwareItem> a = itemdatabase.readItems();
                 foreach (var l in a)
                 {
                     listBox1.Items.Add(l);
@@ -146,7 +146,7 @@ namespace ProsimDeli
         {
             listBox1.Items.Clear();
             ItemsDatabase itemsdatabase = new ItemsDatabase();
-            List<Item> a = itemsdatabase.ReadItems();
+            List<HardwareItem> a = itemsdatabase.readItems();
             foreach (var l in a)
             {
                 listBox1.Items.Add(l);
@@ -175,7 +175,7 @@ namespace ProsimDeli
         {
             listBox1.Items.Clear();
             ItemsDatabase itemsdatabase = new ItemsDatabase();
-            List<Item> a = itemsdatabase.ReadItems();
+            List<HardwareItem> a = itemsdatabase.readItems();
             foreach (var l in a)
             {
                 listBox1.Items.Add(l);

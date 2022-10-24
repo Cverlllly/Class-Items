@@ -11,7 +11,7 @@ namespace ProsimDeli
 
         public ItemsDatabase()
         {
-            conn = new SQLiteConnection(@"data source=items.db");
+            conn = new SQLiteConnection(@"data source=itemss.db");
         }
 
         public void SaveItem(string itemToSave,string Price)
@@ -37,11 +37,9 @@ namespace ProsimDeli
                 throw;
             }
         }
-        public List<Item> ReadItems()
+        public List<HardwareItem> readItems()
         {
-            try
-            {
-                List<Item> list = new List<Item>();
+                List<HardwareItem> list = new List<HardwareItem>();
                 using (conn)
                 {
                     conn.Open();
@@ -51,20 +49,15 @@ namespace ProsimDeli
                         SQLiteDataReader reader = com.ExecuteReader();
                         while (reader.Read())
                         {
-                            list.Add(new Item(reader.GetInt32(0), reader.GetString(1), reader.GetString(2)));
+                            list.Add(new HardwareItem(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(5)));
                         }
                         Console.WriteLine(list);
                         com.Dispose();
                     }
                     conn.Close();
                 }
-                return list;
-            }
-            catch (Exception)
-            {
+            return list;
 
-                throw;
-            }
         }
 
         public List<Item> Readitem(int ID)
@@ -140,6 +133,27 @@ namespace ProsimDeli
 
                 throw;
             }
+        }
+        public List<Computer> AllItems()
+        {
+            List<Computer> list = new List<Computer>();
+            using (conn)
+            {
+                conn.Open();
+                using (SQLiteCommand com = new SQLiteCommand(conn))
+                {
+                    com.CommandText = "SELECT * FROM Items i Inner join Computer c on i.ItemID=c.ItemID";
+                    SQLiteDataReader reader = com.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        list.Add(new Computer(reader.GetInt32(0), reader.GetString(2), reader.GetString(1), reader.GetString(5), reader.GetInt32(9), reader.GetInt32(8), reader.GetInt32(10));
+                    }
+                    Console.WriteLine(list);
+                    com.Dispose();
+                }
+                conn.Close();
+            }
+            return list;
         }
     }
 }
