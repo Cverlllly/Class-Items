@@ -142,11 +142,11 @@ namespace ProsimDeli
                 conn.Open();
                 using (SQLiteCommand com = new SQLiteCommand(conn))
                 {
-                    com.CommandText = "SELECT * FROM Items i Inner join Computer c on i.ItemID=c.ItemID";
+                    com.CommandText = "SELECT i.ItemID,i.ItemName,i.Price,i.Weight,c.NoOfCores,c.Ram,c.HDDSize FROM Items i Inner join Computer c on i.ItemID=c.ItemID";
                     SQLiteDataReader reader = com.ExecuteReader();
                     while (reader.Read())
                     {
-                        list.Add(new Computer(reader.GetInt32(0), reader.GetString(2), reader.GetString(1), reader.GetString(5), reader.GetInt32(9), reader.GetInt32(8), reader.GetInt32(10));
+                        list.Add(new Computer(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetInt32(6)));
                     }
                     Console.WriteLine(list);
                     com.Dispose();
@@ -155,6 +155,7 @@ namespace ProsimDeli
             }
             return list;
         }
+
     }
 }
 

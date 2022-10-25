@@ -65,7 +65,7 @@ namespace ProsimDeli
         }
         public override string ToString()
         {
-            return ItemID.ToString() + " " + ItemName.ToString() + " " + Price.ToString() + " " + Weight.ToString() + " " + NoOFCores.ToString() + " " + AmounttOFRam.ToString() + " " + HDDSize.ToString();
+            return ItemID.ToString() +ItemName.ToString() + Price.ToString() + Weight.ToString() +NoOFCores.ToString() +AmounttOFRam.ToString() + HDDSize.ToString();
         }
     }
     public class Monitor : HardwareItem

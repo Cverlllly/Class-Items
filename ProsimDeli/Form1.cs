@@ -6,17 +6,20 @@ namespace ProsimDeli
 {
     public partial class Form1 : Form
     {
+        String std = "{0, -10}{1, -20}{2, -20}{3, -20}{4, -20}{5, -20}{6, -16}";
+        String std1 = "{0, -10}{1, -22}{2, -22}{3, -22}{4, -22}{5, -22}{6, -16}";
         public Form1()
         {
             InitializeComponent();
-
+            listBox1.Items.Add(String.Format(std, "ID", "Name", "Price", "Weight", "Cores", "RAM", "HDD"));
             ItemsDatabase itemsdatabase = new ItemsDatabase();
             List<Computer> a = itemsdatabase.AllItems();
-            foreach(var l in a)
+            foreach(Computer l in a)
             {
-                listBox1.Items.Add(l);
+                listBox1.Items.Add(String.Format(std1, l.ItemID, l.ItemName, l.Price, l.Weight, l.NoOFCores, l.AmounttOFRam, l.HDDSize));
 
             }
+
 
         }
         private string ja;
@@ -123,6 +126,7 @@ namespace ProsimDeli
             {
                 if (!(textBox2.Text is "") && !(textBox2.Text is ""))
                 {
+
                     int ne = int.Parse(ja);
                     string neki = textBox2.Text;
                     string price = textBox3.Text;
@@ -145,8 +149,10 @@ namespace ProsimDeli
         private void button2_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
+            InitializeComponent();
+            listBox1.Items.Add(String.Format(std, "ID", "Name", "Price", "Weight", "Cores", "RAM", "HDD"));
             ItemsDatabase itemsdatabase = new ItemsDatabase();
-            List<HardwareItem> a = itemsdatabase.readItems();
+            List<Computer> a = itemsdatabase.AllItems();
             foreach (var l in a)
             {
                 listBox1.Items.Add(l);
@@ -174,8 +180,10 @@ namespace ProsimDeli
         private void button2_Click(object sender, MouseEventArgs e)
         {
             listBox1.Items.Clear();
+            InitializeComponent();
+            listBox1.Items.Add(String.Format(std, "ID", "Name", "Price", "Weight", "Cores", "RAM", "HDD"));
             ItemsDatabase itemsdatabase = new ItemsDatabase();
-            List<HardwareItem> a = itemsdatabase.readItems();
+            List<Computer> a = itemsdatabase.AllItems();
             foreach (var l in a)
             {
                 listBox1.Items.Add(l);
@@ -185,6 +193,15 @@ namespace ProsimDeli
             textBox2.Text = "";
             textBox3.Text = "";
 
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
         }
     }
 }
