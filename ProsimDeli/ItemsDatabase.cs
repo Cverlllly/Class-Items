@@ -137,7 +137,7 @@ namespace ProsimDeli
         public List<Computer> AllItems()
         {
             List<Computer> list = new List<Computer>();
-            using (conn)
+            //using (conn)
             {
                 conn.Open();
                 using (SQLiteCommand com = new SQLiteCommand(conn))
@@ -152,6 +152,48 @@ namespace ProsimDeli
                     com.Dispose();
                 }
                 conn.Close();
+            }
+            return list;
+        }
+        public List<Monitor> AllItems_2()
+        {
+            List<Monitor> list = new List<Monitor>();
+            //using (conn)
+            {
+                conn.Open();
+                using (SQLiteCommand com = new SQLiteCommand(conn))
+                {
+                    com.CommandText = "SELECT i.ItemID,i.ItemName,i.Price,i.Weight,m.MonitorType,m.Resolution FROM Items i Inner join Monitors m on i.ItemID=m.ItemID";
+                    SQLiteDataReader reader = com.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        list.Add(new Monitor(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5)));
+                    }
+                    Console.WriteLine(list);
+                    com.Dispose();
+                }
+                conn.Close();
+            }
+            return list;
+        }
+        public List<HardwareItem> Allitems_3()
+        {
+            List<HardwareItem> list=new List<HardwareItem>();
+            {
+                conn.Open();
+                using (SQLiteCommand com = new SQLiteCommand(conn))
+                {
+                    com.CommandText = "SELECT i.ItemID,i.ItemName,i.Price,i.Weight FROM Items i WHERE ";
+                    SQLiteDataReader reader = com.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        list.Add(new HardwareItem(reader.GetInt32(0), reader.GetString(1), reader.GetString(2),reader.GetString(3)));
+                    }
+                    Console.WriteLine(list);
+                    com.Dispose();
+                }
+                conn.Close();
+
             }
             return list;
         }

@@ -6,18 +6,26 @@ namespace ProsimDeli
 {
     public partial class Form1 : Form
     {
-        String std = "{0, -10}{1, -20}{2, -20}{3, -20}{4, -20}{5, -20}{6, -16}";
-        String std1 = "{0, -10}{1, -22}{2, -22}{3, -22}{4, -22}{5, -22}{6, -16}";
+        String std = "{0, -5}{1, -10}{2, -10}{3, -10}{4, -10}{5, -10}{6,-6}";
+        String std1 = "{0, -7}{1, -9}{2, -12}{3, -12}{4, -9}{5, -9}{6,-6}";
+        String std2 = "{0, -5}{1, -10}{2, -10}{3, -10}{4, -15}{5, -4}";
         public Form1()
         {
             InitializeComponent();
+            listBox1.Items.Add("Computer:");
             listBox1.Items.Add(String.Format(std, "ID", "Name", "Price", "Weight", "Cores", "RAM", "HDD"));
             ItemsDatabase itemsdatabase = new ItemsDatabase();
             List<Computer> a = itemsdatabase.AllItems();
             foreach(Computer l in a)
             {
-                listBox1.Items.Add(String.Format(std1, l.ItemID, l.ItemName, l.Price, l.Weight, l.NoOFCores, l.AmounttOFRam, l.HDDSize));
-
+                listBox1.Items.Add(String.Format(std1, l.ItemID, l.ItemName, l.Price+"€", l.Weight+"g", l.NoOFCores, l.AmounttOFRam+"MB", l.HDDSize+"GB"));
+            }
+            listBox1.Items.Add("Monitor:");
+            listBox1.Items.Add(String.Format(std2,"ID", "Name", "Price", "Weight", "Resolution", "Type"));
+            List<Monitor> monitor=itemsdatabase.AllItems_2();
+            foreach(Monitor x in monitor)
+            {
+                listBox1.Items.Add(String.Format(std2, x.ItemID, x.ItemName, x.Price + "€", x.Weight + "g", x.monType, x.resolution));
             }
 
 
@@ -25,16 +33,31 @@ namespace ProsimDeli
         private string ja;
         private string ime;
         private string cena;
+        List<string> list = new List<string>();
+        List<string> li = new List<string>();
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
-            {
-
+            { 
                 var neki = listBox1.Text.Split(' ');
-                Console.WriteLine(neki);
-                ja = neki[0];
-                ime = neki[1];
-                cena = neki[2];
+                foreach(string x in neki)
+                {
+                    if (x != "")
+                    {
+                        list.Add(x);
+                    }
+                }
+                foreach (string i in list)
+                {
+                    if(i!=" ")
+                    {
+                        li.Add(i);
+                    }
+                }
+                Console.WriteLine(li);
+                ja = li[0];
+                ime = li[1];
+                cena = li[2];
 
                 textBox2.Text = ime;
                 textBox3.Text = cena;
@@ -149,15 +172,20 @@ namespace ProsimDeli
         private void button2_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
-            InitializeComponent();
             listBox1.Items.Add(String.Format(std, "ID", "Name", "Price", "Weight", "Cores", "RAM", "HDD"));
             ItemsDatabase itemsdatabase = new ItemsDatabase();
             List<Computer> a = itemsdatabase.AllItems();
-            foreach (var l in a)
+            foreach (Computer l in a)
             {
-                listBox1.Items.Add(l);
-
+                listBox1.Items.Add(String.Format(std1, l.ItemID, l.ItemName, l.Price + "€", l.Weight + "g", l.NoOFCores, l.AmounttOFRam + "MB", l.HDDSize + "GB"));
             }
+            listBox1.Items.Add(String.Format(std2, "ID", "Name", "Price", "Weight", "Type", "Resolution"));
+            List<Monitor> monitor = itemsdatabase.AllItems_2();
+            foreach (Monitor x in monitor)
+            {
+                listBox1.Items.Add(String.Format(std2, x.ItemID, x.ItemName, x.Price + "€", x.Weight + "g", x.monType, x.resolution));
+            }
+
             textBox1.Text = "";
             textBox2.Text = "";
             textBox3.Text = "";
@@ -180,15 +208,20 @@ namespace ProsimDeli
         private void button2_Click(object sender, MouseEventArgs e)
         {
             listBox1.Items.Clear();
-            InitializeComponent();
             listBox1.Items.Add(String.Format(std, "ID", "Name", "Price", "Weight", "Cores", "RAM", "HDD"));
             ItemsDatabase itemsdatabase = new ItemsDatabase();
             List<Computer> a = itemsdatabase.AllItems();
-            foreach (var l in a)
+            foreach (Computer l in a)
             {
-                listBox1.Items.Add(l);
-
+                listBox1.Items.Add(String.Format(std1, l.ItemID, l.ItemName, l.Price + "€", l.Weight + "g", l.NoOFCores, l.AmounttOFRam + "MB", l.HDDSize + "GB"));
             }
+            listBox1.Items.Add(String.Format(std2, "ID", "Name", "Price", "Weight", "Type", "Resolution"));
+            List<Monitor> monitor =  itemsdatabase.AllItems_2();
+            foreach (Monitor x in monitor)
+            {
+                listBox1.Items.Add(String.Format(std2, x.ItemID, x.ItemName, x.Price + "€", x.Weight + "g", x.monType, x.resolution));
+            }
+
             textBox1.Text = "";
             textBox2.Text = "";
             textBox3.Text = "";
