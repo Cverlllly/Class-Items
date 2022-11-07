@@ -11,7 +11,7 @@ namespace ProsimDeli
 
         public ItemsDatabase()
         {
-            conn = new SQLiteConnection(@"data source=itemss.db");
+            conn = new SQLiteConnection("data source=itemss.db");
         }
 
         public void SaveItem(string itemToSave,string Price)
@@ -176,14 +176,14 @@ namespace ProsimDeli
             }
             return list;
         }
-        public List<HardwareItem> Allitems_3()
+        public List<HardwareItem> AllItems_3()
         {
             List<HardwareItem> list=new List<HardwareItem>();
             {
                 conn.Open();
                 using (SQLiteCommand com = new SQLiteCommand(conn))
                 {
-                    com.CommandText = "SELECT i.ItemID,i.ItemName,i.Price,i.Weight FROM Items i WHERE ";
+                    com.CommandText = "SELECT i.ItemID,i.ItemName,i.Price,i.Weight FROM Items i WHERE Hardwareitems=1";
                     SQLiteDataReader reader = com.ExecuteReader();
                     while (reader.Read())
                     {

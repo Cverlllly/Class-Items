@@ -9,6 +9,7 @@ namespace ProsimDeli
         String std = "{0, -5}{1, -10}{2, -10}{3, -10}{4, -10}{5, -10}{6,-6}";
         String std1 = "{0, -7}{1, -9}{2, -12}{3, -12}{4, -9}{5, -9}{6,-6}";
         String std2 = "{0, -5}{1, -10}{2, -10}{3, -10}{4, -15}{5, -4}";
+        String std3 = "{0, -5}{1, -10}{2, -10}{3, -10}";
         public Form1()
         {
             InitializeComponent();
@@ -26,6 +27,13 @@ namespace ProsimDeli
             foreach(Monitor x in monitor)
             {
                 listBox1.Items.Add(String.Format(std2, x.ItemID, x.ItemName, x.Price + "€", x.Weight + "g", x.monType, x.resolution));
+            }
+            listBox1.Items.Add("Hardware:");
+            listBox1.Items.Add(String.Format(std3, "ID", "Name", "Price", "Weight"));
+            List<HardwareItem> hard = itemsdatabase.AllItems_3();
+            foreach(HardwareItem x in hard)
+            {
+                listBox1.Items.Add(String.Format(std2, x.ItemID, x.ItemName, x.Price + "€", x.Weight + "g"));
             }
 
 
@@ -172,6 +180,7 @@ namespace ProsimDeli
         private void button2_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
+            listBox1.Items.Add("Computer:");
             listBox1.Items.Add(String.Format(std, "ID", "Name", "Price", "Weight", "Cores", "RAM", "HDD"));
             ItemsDatabase itemsdatabase = new ItemsDatabase();
             List<Computer> a = itemsdatabase.AllItems();
@@ -179,11 +188,19 @@ namespace ProsimDeli
             {
                 listBox1.Items.Add(String.Format(std1, l.ItemID, l.ItemName, l.Price + "€", l.Weight + "g", l.NoOFCores, l.AmounttOFRam + "MB", l.HDDSize + "GB"));
             }
-            listBox1.Items.Add(String.Format(std2, "ID", "Name", "Price", "Weight", "Type", "Resolution"));
+            listBox1.Items.Add("Monitor:");
+            listBox1.Items.Add(String.Format(std2, "ID", "Name", "Price", "Weight", "Resolution", "Type"));
             List<Monitor> monitor = itemsdatabase.AllItems_2();
             foreach (Monitor x in monitor)
             {
                 listBox1.Items.Add(String.Format(std2, x.ItemID, x.ItemName, x.Price + "€", x.Weight + "g", x.monType, x.resolution));
+            }
+            listBox1.Items.Add("Hardware:");
+            listBox1.Items.Add(String.Format(std3, "ID", "Name", "Price", "Weight"));
+            List<HardwareItem> hard = itemsdatabase.AllItems_3();
+            foreach (HardwareItem x in hard)
+            {
+                listBox1.Items.Add(String.Format(std2, x.ItemID, x.ItemName, x.Price + "€", x.Weight + "g"));
             }
 
             textBox1.Text = "";
@@ -208,6 +225,7 @@ namespace ProsimDeli
         private void button2_Click(object sender, MouseEventArgs e)
         {
             listBox1.Items.Clear();
+            listBox1.Items.Add("Computer:");
             listBox1.Items.Add(String.Format(std, "ID", "Name", "Price", "Weight", "Cores", "RAM", "HDD"));
             ItemsDatabase itemsdatabase = new ItemsDatabase();
             List<Computer> a = itemsdatabase.AllItems();
@@ -215,11 +233,19 @@ namespace ProsimDeli
             {
                 listBox1.Items.Add(String.Format(std1, l.ItemID, l.ItemName, l.Price + "€", l.Weight + "g", l.NoOFCores, l.AmounttOFRam + "MB", l.HDDSize + "GB"));
             }
-            listBox1.Items.Add(String.Format(std2, "ID", "Name", "Price", "Weight", "Type", "Resolution"));
-            List<Monitor> monitor =  itemsdatabase.AllItems_2();
+            listBox1.Items.Add("Monitor:");
+            listBox1.Items.Add(String.Format(std2, "ID", "Name", "Price", "Weight", "Resolution", "Type"));
+            List<Monitor> monitor = itemsdatabase.AllItems_2();
             foreach (Monitor x in monitor)
             {
                 listBox1.Items.Add(String.Format(std2, x.ItemID, x.ItemName, x.Price + "€", x.Weight + "g", x.monType, x.resolution));
+            }
+            listBox1.Items.Add("Hardware:");
+            listBox1.Items.Add(String.Format(std3, "ID", "Name", "Price", "Weight"));
+            List<HardwareItem> hard = itemsdatabase.AllItems_3();
+            foreach (HardwareItem x in hard)
+            {
+                listBox1.Items.Add(String.Format(std2, x.ItemID, x.ItemName, x.Price + "€", x.Weight + "g"));
             }
 
             textBox1.Text = "";
@@ -228,10 +254,6 @@ namespace ProsimDeli
 
         }
 
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
