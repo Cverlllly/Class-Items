@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Data.SQLite;
+using System.Windows.Forms;
 
 namespace ProsimDeli
 {
@@ -11,130 +12,9 @@ namespace ProsimDeli
 
         public ItemsDatabase()
         {
-            conn = new SQLiteConnection("data source=itemss.db");
+            conn = new SQLiteConnection(@"data source=itemss.db");
         }
-
-        public void SaveItem(string itemToSave,string Price)
-        {
-            try
-            {
-                using (conn)
-                {
-                    conn.Open();
-                    using (SQLiteCommand com = new SQLiteCommand(conn))
-                    {
-                        com.CommandText = "INSERT INTO Items (ItemName,Price) VALUES ('" + itemToSave + "'," +"'"+ Price+"'" + ");";
-                        com.ExecuteNonQuery();
-
-                        com.Dispose();
-                    }
-                    conn.Close();
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        public List<HardwareItem> readItems()
-        {
-                List<HardwareItem> list = new List<HardwareItem>();
-                using (conn)
-                {
-                    conn.Open();
-                    using (SQLiteCommand com = new SQLiteCommand(conn))
-                    {
-                        com.CommandText = "SELECT * FROM Items";
-                        SQLiteDataReader reader = com.ExecuteReader();
-                        while (reader.Read())
-                        {
-                            list.Add(new HardwareItem(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(5)));
-                        }
-                        Console.WriteLine(list);
-                        com.Dispose();
-                    }
-                    conn.Close();
-                }
-            return list;
-
-        }
-
-        public List<Item> Readitem(int ID)
-        {
-            try
-            {
-                List<Item> list = new List<Item>();
-                using (conn)
-                {
-                    conn.Open();
-                    using (SQLiteCommand com = new SQLiteCommand(conn))
-                    {
-                        com.CommandText = "SELECT * FROM Items WHERE ItemID=" + ID;
-                        SQLiteDataReader reader = com.ExecuteReader();
-                        while (reader.Read())
-                        {
-                            list.Add(new Item(reader.GetInt32(0), reader.GetString(1), reader.GetString(2)));
-                        }
-                        Console.WriteLine(list);
-                        com.Dispose();
-
-                    }
-                    conn.Close();
-                }
-                return list;
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        public void UpdateItem(int ID, string itemtoupdate,string price)
-        {
-            try
-            {
-                using (conn)
-                {
-                    conn.Open();
-                    using (SQLiteCommand com = new SQLiteCommand(conn))
-                    {
-                        com.CommandText = "UPDATE Items SET ItemName=" + "'" + itemtoupdate + "'" + ", Price=" +"'" +price +"'"+ " " + "WHERE ItemID=" + ID;
-                        com.ExecuteNonQuery();
-
-                        com.Dispose();
-                    }
-                    conn.Close();
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-
-        }
-        public void DeleteItem(int ID)
-        {
-            try
-            {
-                conn.Open();
-                using (SQLiteCommand com = new SQLiteCommand(conn))
-                {
-                    com.CommandText = "DELETE FROM Items WHERE ItemID=" + ID;
-                    com.ExecuteNonQuery();
-
-                    com.Dispose();
-                }
-                conn.Close();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        public List<Computer> AllItems()
+        public List<Computer> ReadComputers()
         {
             List<Computer> list = new List<Computer>();
             //using (conn)
@@ -142,11 +22,12 @@ namespace ProsimDeli
                 conn.Open();
                 using (SQLiteCommand com = new SQLiteCommand(conn))
                 {
-                    com.CommandText = "SELECT i.ItemID,i.ItemName,i.Price,i.Weight,c.NoOfCores,c.Ram,c.HDDSize FROM Items i Inner join Computer c on i.ItemID=c.ItemID";
+                    com.CommandText = "SELECT i.id_i,i.name,i.price,h.weight,c.noofcores,c.ram,c.hddsize FROM items i INNER JOIN hardwareitem h ON i.id_i=h.id_i INNER JOIN " +
+                        "computer c ON h.id_h=c.id_h";
                     SQLiteDataReader reader = com.ExecuteReader();
                     while (reader.Read())
                     {
-                        list.Add(new Computer(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetInt32(6)));
+                        list.Add(new Computer(reader.GetInt32(0), reader.GetString(1), reader.GetDouble(2), reader.GetDouble(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetInt32(6)));
                     }
                     Console.WriteLine(list);
                     com.Dispose();
@@ -155,7 +36,7 @@ namespace ProsimDeli
             }
             return list;
         }
-        public List<Monitor> AllItems_2()
+        public List<Monitor> ReadMonitors()
         {
             List<Monitor> list = new List<Monitor>();
             //using (conn)
@@ -163,11 +44,12 @@ namespace ProsimDeli
                 conn.Open();
                 using (SQLiteCommand com = new SQLiteCommand(conn))
                 {
-                    com.CommandText = "SELECT i.ItemID,i.ItemName,i.Price,i.Weight,m.MonitorType,m.Resolution FROM Items i Inner join Monitors m on i.ItemID=m.ItemID";
+                    com.CommandText = "SELECT i.id_i,i.name,i.price,h.weight,m.resolution,m.monitortype FROM items i INNER JOIN hardwareitem h ON i.id_i=h.id_i INNER JOIN " +
+                        "monitor m ON h.id_h=m.id_h";
                     SQLiteDataReader reader = com.ExecuteReader();
                     while (reader.Read())
                     {
-                        list.Add(new Monitor(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5)));
+                        list.Add(new Monitor(reader.GetInt32(0),reader.GetString(1),reader.GetDouble(2),reader.GetDouble(3),reader.GetString(4),reader.GetString(5)));
                     }
                     Console.WriteLine(list);
                     com.Dispose();
@@ -176,32 +58,100 @@ namespace ProsimDeli
             }
             return list;
         }
-        public List<HardwareItem> AllItems_3()
+        public List<HardwareItem> ReadHardwre()
         {
-            List<HardwareItem> list=new List<HardwareItem>();
+            List<HardwareItem> list = new List<HardwareItem>();
+            //using (conn)
             {
                 conn.Open();
                 using (SQLiteCommand com = new SQLiteCommand(conn))
                 {
-                    com.CommandText = "SELECT i.ItemID,i.ItemName,i.Price,i.Weight FROM Items i WHERE Hardwareitems=1";
+                    com.CommandText = "SELECT i.id_i,i.name,i.price,h.weight FROM items i INNER JOIN hardwareitem h ON i.id_i=h.id_i WHERE is_computer=0 and is_monitor=0 ";
                     SQLiteDataReader reader = com.ExecuteReader();
                     while (reader.Read())
                     {
-                        list.Add(new HardwareItem(reader.GetInt32(0), reader.GetString(1), reader.GetString(2),reader.GetString(3)));
+                        list.Add(new HardwareItem(reader.GetInt32(0), reader.GetString(1), reader.GetDouble(2), reader.GetDouble(3)));
                     }
                     Console.WriteLine(list);
                     com.Dispose();
                 }
                 conn.Close();
-
             }
             return list;
         }
-
+        public List<SoftwareItem> ReadSoftware()
+        {
+            List<SoftwareItem> list = new List<SoftwareItem>();
+            //using (conn)
+            {
+                conn.Open();
+                using (SQLiteCommand com = new SQLiteCommand(conn))
+                {
+                    com.CommandText = "SELECT i.id_i,i.name,i.price,s.licencekey,s.sizeinMb FROM items i INNER JOIN softwareitem s ON s.id_i=i.id_i WHERE i.is_soft=1;";
+                    SQLiteDataReader reader = com.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        list.Add(new SoftwareItem(reader.GetInt32(0), reader.GetString(1), reader.GetDouble(2), reader.GetString(3),reader.GetInt32(4)));
+                    }
+                    Console.WriteLine(list);
+                    com.Dispose();
+                }
+                conn.Close();
+            }
+            return list;
+        }
+        public List<Item> ReadItems()
+        {
+            List<Item> list = new List<Item>();
+            //using (conn)
+            {
+                conn.Open();
+                using (SQLiteCommand com = new SQLiteCommand(conn))
+                {
+                    com.CommandText = "SELECT i.id_i,i.name,i.price FROM items i WHERE i.is_soft=0 and i.is_hard=0;";
+                    SQLiteDataReader reader = com.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        list.Add(new Item(reader.GetInt32(0), reader.GetString(1), reader.GetDouble(2)));
+                    }
+                    Console.WriteLine(list);
+                    com.Dispose();
+                }
+                conn.Close();
+            }
+            return list;
+        }
+        public void InsertItems(string itemToSave, string Price)
+        {
+            //using (conn)
+            {
+                conn.Open();
+                using (SQLiteCommand com = new SQLiteCommand(conn))
+                {
+                    com.CommandText = "INSERT INTO Items (name,price,is_soft,is_hard) VALUES ('" + itemToSave + "'," + "'" + Price + "'" + ",0,0);";
+                    com.ExecuteNonQuery();
+                    com.Dispose();
+                }
+                conn.Close();
+            }
+        }
+        public void InsertHardware(string ime, string cena,string weight)
+        {
+            //using (conn)
+            {
+                conn.Open();
+                using (SQLiteCommand com = new SQLiteCommand(conn))
+                {
+                    com.CommandText = "INSERT INTO items (name,price,is_soft,is_hard) VALUES ('" + ime + "'," + "'" + cena + "'" + ",0,1);";
+                    com.CommandText = "INSERT INTO hardwareitem (weight,is_computer,is_monitor,id_i) VALUES ("+weight+",0,0,(SELECT id_i FROM items WHERE name="+"'"+ime+"'"+" and price="+cena+"));";
+                    com.ExecuteNonQuery();
+                    com.Dispose();
+                }
+                conn.Close();
+            }
+        }
     }
 }
-
-
 
 
 

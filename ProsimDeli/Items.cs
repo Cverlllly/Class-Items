@@ -10,8 +10,8 @@ namespace ProsimDeli
     {
         public int ItemID { get; set; }
         public string ItemName { get; set; }
-        public string Price { get; set; }
-        public Item(int itemid, string itemname, string price)
+        public double Price { get; set; }
+        public Item(int itemid, string itemname, double price)
         {
             ItemID = itemid;
             ItemName = itemname;
@@ -29,7 +29,7 @@ namespace ProsimDeli
 
         public int SizeInMB { get; set; }
 
-        public SoftwareItem(int itemid,string itemname, string price,string licenceKey,int sizeInMB): base(itemid,itemname,price)
+        public SoftwareItem(int itemid,string itemname, double price,string licenceKey,int sizeInMB): base(itemid,itemname,price)
         {
             LicenceKey = licenceKey;
             SizeInMB = sizeInMB;
@@ -41,8 +41,8 @@ namespace ProsimDeli
     }
     public class HardwareItem: Item
     {
-        public string Weight { get; set; }
-        public HardwareItem(int itemid, string itemname, string price , string weight) : base(itemid, itemname, price)
+        public double Weight { get; set; }
+        public HardwareItem(int itemid, string itemname, double price , double weight) : base(itemid, itemname, price)
         {
             Weight = weight;
         }
@@ -57,7 +57,7 @@ namespace ProsimDeli
         public int AmounttOFRam { get; set; }
         public int HDDSize { get; set; }
 
-        public Computer(int itemid, string itemname, string price, string Weight,int cores,int ram,int hdd): base(itemid, itemname, price, Weight)
+        public Computer(int itemid, string itemname, double price, double  Weight,int cores,int ram,int hdd): base(itemid, itemname, price, Weight)
         {
             NoOFCores = cores;
             AmounttOFRam = ram;
@@ -73,7 +73,7 @@ namespace ProsimDeli
         public string resolution { get; set; }
         public string monType { get; set; }
 
-        public Monitor(int itemid, string itemname, string price, string Weight, string res, string type): base(itemid, itemname, price, Weight)
+        public Monitor(int itemid, string itemname, double price, double Weight, string res, string type): base(itemid, itemname, price, Weight)
         {
             resolution = res;
             monType = type;
